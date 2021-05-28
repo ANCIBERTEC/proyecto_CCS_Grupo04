@@ -1,5 +1,4 @@
 package net.ncdevice.interfaces;
-
 import java.util.List;
 
 import net.ncdevice.entidad.Documento;
