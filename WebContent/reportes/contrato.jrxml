@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cotizacion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e260c8a9-bb61-48d1-a7ff-d91a9258bb0d">
+	<property name="ireport.zoom" value="1.1269722013523664"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="236"/>
+	<style name="table">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FF7F50">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFD0BF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#FFF3EF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="idcontrato" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\CIBERTEC\\CICLO V\\PROYECTOS V\\JAVA\\Proyecto Ver. 1.0\\NCDEVICE\\WebContent\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select d.*,i.nombre,co.idcontrato,co.fecInicio,co.fecFinal,co.dias,round(co.monto,2) 'monto_total',cl.razonSocial,cl.direccion,cl.telefono,dis.nombre 'nom_dis',cl.dni 'dni_cli'
+from detallecotizacion d
+join item i on d.iditem=i.iditem
+join cotizacion c on d.idCotizacion=c.idCotizacion
+join contrato co on c.idCotizacion=co.idCotizacion
+join cliente cl on c.idcliente=cl.idcliente
+join distrito dis on cl.iddistrito=dis.iddistrito
+where co.idcontrato=$P{idcontrato};]]>
+	</queryString>
+	<field name="idCotizacion" class="java.lang.String">
+		<fieldDescription><![CDATA[idcotizacion]]></fieldDescription>
+	</field>
+	<field name="iditem" class="java.lang.Integer">
+		<fieldDescription><![CDATA[detalleCot.item.iditem]]></fieldDescription>
+	</field>
+	<field name="precio" class="java.lang.Double">
+		<fieldDescription><![CDATA[detalleCot.precio]]></fieldDescription>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[detalleCot.cantidad]]></fieldDescription>
+	</field>
+	<field name="precioTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[detalleCot.precioTotal]]></fieldDescription>
+	</field>
+	<field name="subtotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[detalleCot.subtotal]]></fieldDescription>
+	</field>
+	<field name="descuento" class="java.lang.Double">
+		<fieldDescription><![CDATA[detalleCot.descuento]]></fieldDescription>
+	</field>
+	<field name="igv" class="java.lang.Double">
+		<fieldDescription><![CDATA[detalleCot.igv]]></fieldDescription>
+	</field>
+	<field name="monTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[detalleCot.monTotal]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[detalleCot.item.nombre]]></fieldDescription>
+	</field>
+	<field name="idcontrato" class="java.lang.String">
+		<fieldDescription><![CDATA[iddocumento]]></fieldDescription>
+	</field>
+	<field name="fecInicio" class="java.sql.Date">
+		<fieldDescription><![CDATA[fecInicio]]></fieldDescription>
+	</field>
+	<field name="fecFinal" class="java.sql.Date">
+		<fieldDescription><![CDATA[fecFInal]]></fieldDescription>
+	</field>
+	<field name="dias" class="java.lang.Integer">
+		<fieldDescription><![CDATA[dias]]></fieldDescription>
+	</field>
+	<field name="monto_total" class="java.lang.Double">
+		<fieldDescription><![CDATA[monto]]></fieldDescription>
+	</field>
+	<field name="razonSocial" class="java.lang.String">
+		<fieldDescription><![CDATA[cotizacion.cliente.razonSocial]]></fieldDescription>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<fieldDescription><![CDATA[cotizacion.cliente.direccion]]></fieldDescription>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[cotizacion.cliente.telefono]]></fieldDescription>
+	</field>
+	<field name="nom_dis" class="java.lang.String">
+		<fieldDescription><![CDATA[cotizacion.cliente.distrito.nombre]]></fieldDescription>
+	</field>
+	<field name="dni_cli" class="java.lang.String">
+		<fieldDescription><![CDATA[cotizacion.cliente.dni]]></fieldDescription>
+	</field>
+	<variable name="variable1" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{monto_total}/2]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="304" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="-20" y="-25" width="597" height="210" uuid="b80a2461-8bf5-4190-ba38-56411eae5f02"/>
+				<imageExpression><![CDATA["D:\\CIBERTEC\\CICLO V\\PROYECTOS V\\JAVA\\Proyecto Ver. 1.0\\NCDEVICE\\WebContent\\img\\encabezado.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="11" y="0" width="217" height="48" forecolor="#FFFFFF" uuid="d95d7298-afe1-4269-b4ee-aa351b3fb5f8"/>
+				<textElement textAlignment="Justified" markup="none">
+					<font fontName="Cambria" size="32" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[CONTRATO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="37" y="48" width="154" height="35" forecolor="#FFFFFF" uuid="f010a173-2186-497b-9eff-4b7e6db7703b"/>
+				<textElement>
+					<font size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idcontrato}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="205" width="555" height="68" uuid="8583b801-9511-4c6a-a157-ca00aca3f037"/>
+				<textFieldExpression><![CDATA["Conste por el presente documento EL CONTRATO DE SERVICIOS PROFESIONALES, que celebran una parte el Sr. "+$F{razonSocial}+" con DNI "+$F{dni_cli}+" con domicilio en "+$F{direccion}+" distrito "+$F{nom_dis}+" a quien delante se denominará EL CLIENTE y de la otra parte la empresa NC DEVICE EIRL con RUC 20685496323 con domicilIo en Av. Los Sauces #125, Puente Piedra, representado por Daniel Ramos con DNI 85269320, que desde ahora se denomirá EL CONTRATISTA, el cual llevará a cabo la elaboración de dicho trabajo que se menciona en la siguiente cláusula."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="273" width="555" height="24" uuid="f2d926b6-16af-4c60-9123-3d61d946a7b6"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["PRIMERO: EL CONTRATISA se compromete a realizar el trabajo a todo costo acrodado que consta de lo siguiente:"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="21">
+			<frame>
+				<reportElement style="table_TH" mode="Opaque" x="0" y="0" width="555" height="21" backcolor="#666666" uuid="d1a641b1-429e-4a8b-8480-f788cc0672e9"/>
+				<staticText>
+					<reportElement mode="Opaque" x="386" y="1" width="86" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="7111839c-e7f9-4d60-8640-92272c6bfd08"/>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Precio Unit]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="472" y="1" width="83" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="894f9547-ff8a-4425-929a-c1443c5a25ae"/>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Precio Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="1" width="42" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="6e4448b9-28ad-4a13-999a-9e207c3fd8ae"/>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N°]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="42" y="0" width="287" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="54c552d6-e3d5-4547-9a2d-1f13f60b9977"/>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nombre]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="328" y="1" width="58" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="f887e9dc-d5fc-4be8-9007-25f06e5f5167"/>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[QTY]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<frame>
+				<reportElement style="table_CH" mode="Opaque" x="0" y="0" width="555" height="22" backcolor="#CCCCCC" uuid="1888a787-e8b8-439f-84d3-723ce23d9f59"/>
+				<textField>
+					<reportElement mode="Opaque" x="328" y="0" width="58" height="22" backcolor="#CCCCCC" uuid="8f148cb2-e131-4a22-beb7-e4aae781bd34"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="386" y="0" width="86" height="20" backcolor="#CCCCCC" uuid="174446de-b827-4674-9ad4-af4e876f6d04"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="473" y="0" width="75" height="20" backcolor="#CCCCCC" uuid="6284ec87-c43f-4eb4-ae58-829de07b9678">
+						<property name="net.sf.jasperreports.export.pdf.tag.td" value="full"/>
+					</reportElement>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{precioTotal}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="3" y="0" width="39" height="22" uuid="9fe4f215-bbe4-4a5a-b985-2898a54bbec1"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement mode="Opaque" x="51" y="0" width="287" height="22" backcolor="#CCCCCC" uuid="e777b1ea-ad73-4972-9719-d128728bb9fd"/>
+					<textElement>
+						<font isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="6" splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="332" splitType="Stretch">
+			<line>
+				<reportElement x="52" y="186" width="163" height="1" uuid="a37d4c61-d3fc-4020-8a96-28f070392290"/>
+			</line>
+			<staticText>
+				<reportElement x="52" y="187" width="163" height="49" uuid="79178a7a-718f-49be-82ef-8d88a969940d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Daniel Ramos
+DNI:02305090
+Representante de NC DEVICE E.I.R.L.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="329" y="185" width="133" height="1" uuid="8a9f34d0-22e9-4d45-a1e3-909855ee3591"/>
+			</line>
+			<textField>
+				<reportElement x="329" y="185" width="133" height="20" uuid="cbceee30-6542-4de6-8769-f499a380ab80"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DNI: "+$F{dni_cli}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="329" y="205" width="133" height="20" uuid="39099506-45fc-4695-aaca-8f7f41ca95e7"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CLIENTE: "+$F{razonSocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="12" width="555" height="30" uuid="bac82dde-6373-4876-b95e-323ec6d6c846"/>
+				<textFieldExpression><![CDATA["SEGUNDO : EL CONTRATISTA se compromete a realizar el trabajo en dias contando a partIr de la aprobación del contrato si hubiera variación en el trabajo se extenderá la fecha de entrega."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="81" width="555" height="20" uuid="7675572a-c5cd-4346-90cd-e27a3be2031d"/>
+				<textFieldExpression><![CDATA["NOTA : Una vez aprobado el contrato cualquier modificación por parte de EL CLIENTE se considerará un trabajo adicional."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="101" width="555" height="29" uuid="8cc22100-9976-438d-af28-ae28e3e69a19"/>
+				<textFieldExpression><![CDATA["Leídas las cláusulas del presente contrato las partes se ratifican y firman en señal de conformidad en la ciudad de Lima a los dias  del mes de enero del año 2020."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="42" width="555" height="40" uuid="b265f880-cb28-4f98-b111-224e6039164c"/>
+				<textFieldExpression><![CDATA["EL CLIENTE : Se compromete a pagar monto de S/ "+$F{monto_total}+" ; siendo el pago del 50% como adelanto del trabajo siendo S/ "+$V{variable1}+" a la firma del contrato y el pago restante de acuerdo a valorizacion del trabajo, y al concluir firmar el acta de conformidad."]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="-20" y="241" width="597" height="91" uuid="0ab57dda-4b9e-491a-904e-af41d1753868"/>
+				<imageExpression><![CDATA["D:\\CIBERTEC\\CICLO V\\PROYECTOS V\\JAVA\\Proyecto Ver. 1.0\\NCDEVICE\\WebContent\\img\\pie.png"]]></imageExpression>
+			</image>
+		</band>
+	</lastPageFooter>
+</jasperReport>

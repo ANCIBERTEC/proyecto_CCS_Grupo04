@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dawi">
+	<resultMap type="ProveedorIbatis" id="mapProveedor">
+		<id column="idproveedor" property="idproveedor"/>
+		<result column="nombreContacto" property="nombreContacto"/>
+		<result column="nombreEmpresa" property="nombreEmpresa"/>
+		<result column="ruc" property="ruc"/>
+		<result column="telefono" property="telefono"/>
+		<result column="direccion" property="direccion"/>
+		<result column="iddistrito" property="iddistrito"/>
+		<result column="nom_dis" property="distrito.nombre"/>
+		<result column="cod_pro" property="distrito.provincia.idprovincia"/>
+		<result column="cod_reg" property="distrito.provincia.region.idregion"/>
+		<result column="nom_pro" property="distrito.provincia.nombre"/>
+		<result column="nom_reg" property="distrito.provincia.region.nombre"/>
+	</resultMap>
+	<select id="SQL_listarProveedor" statementType="CALLABLE" resultMap="mapProveedor">
+		call sp_listaAllProveedor();
+	</select>
+	
+	<select id="SQL_buscarProveedorXCodigo" statementType="CALLABLE" resultMap="mapProveedor" parameterType="int">
+		call sp_buscaProveedorXCodigo(#{cod});
+	</select>
+	
+	
+	<insert id="SQL_manteProveedor" statementType="CALLABLE" parameterType="ProveedorIbatis">
+		call sp_manteProveedor(#{idproveedor},#{nombreContacto},#{nombreEmpresa},#{ruc},#{telefono},#{direccion},#{iddistrito});
+	</insert>
+	<!-- 
+	<update id="SQL_updateProveedor" statementType="CALLABLE" parameterType="">
+		call sp_modificarProveedor(#{idproveedor},#{nombreContacto},#{nombreEmpresa},#{ruc},#{telefono},#{direccion},#{iddistrito});
+	</update> -->
+	<delete id="SQL_deleteProveedor" statementType="CALLABLE" parameterType="int">
+		call sp_eliminaProveedor(#{codigo});
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+

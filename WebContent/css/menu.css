@@ -1,0 +1,61 @@
+/*@charset "ISO-8859-1";
+*/
+@charset "UTF-8";
+body{
+	background-color: #e4e4e4;
+}
+
+.nomLogo{
+	font-size: 30px;
+}
+.nomPerfil{
+	border-radius: 5px;background-color: green;color:white;
+	padding:5px;
+}
+
+.contenido{
+	display:flex;
+}
+
+#nuevoMensaje{
+	position: -webkit-sticky; 
+    position: sticky;
+    top: 50;
+}
+footer{
+	margin:5%;
+	background-color:white;
+}
+
+.verIcon{
+	display: flex;
+	flex-direction: column;
+	width: 20%;
+}
+
+ .bg-darkblue{
+ 	background-color: #00139E;
+ 	color: white;
+ 	font-weight: bold;
+ }
+ 
+ .bg-darkbrown{
+ 	background-color: #CE7700;
+ 	color: white;
+ 	font-weight: bold;
+ }
+
+@media (max-width:900px){
+	body{
+		font-size:15px;
+	}
+	#principal{
+		margin:0px;
+	}
+	#detalles{
+		font-size:10px;
+	}
+	#tb_detalles,#table_id{
+		font-size:10px;
+	}
+}

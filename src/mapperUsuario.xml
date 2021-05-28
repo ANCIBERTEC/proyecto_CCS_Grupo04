@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dawi">
+	<resultMap type="UsuarioIbatis" id="mapUsuario">
+		<id column="idusuario" property="idusuario"/>
+		<result column="nombre" property="nombre"/>
+		<result column="apellidos" property="apellidos"/>
+		<result column="dni" property="dni"/>
+		<result column="ruc" property="ruc"/>
+		<result column="telefono" property="telefono"/>
+		<result column="correo" property="correo"/>
+		<result column="fechaContrato" property="fechaContrato"/>
+		<result column="sueldo" property="sueldo"/>
+		<result column="banco" property="banco"/>
+		<result column="estado" property="estado"/>
+		<result column="numeroCuenta" property="numeroCuenta"/>
+		<result column="clave" property="password"/>
+		<result column="tipoUsuario" property="tipo"/>
+		<result column="sexo" property="sexo"/>
+		<result column="idcargo" property="idcargo"/>
+		<result column="iddistrito" property="iddistrito"/>
+		<result column="nom_area" property="cargo.area.descripcion"/>
+		<result column="nom_cargo" property="cargo.descripcion"/>
+		<result column="nom_dis" property="distrito.nombre"/>
+		<result column="cod_are" property="cargo.area.idarea"/>
+		<result column="cod_reg" property="distrito.provincia.region.idregion"/>
+		<result column="cod_pro" property="distrito.provincia.idprovincia"/>
+	</resultMap>
+	<resultMap type="MenuIbatis" id="mapMenu">
+		<id column="idmenu" property="idmenu"/>
+		<result column="descripcion" property="descripcion"/>
+		<result column="url" property="url"/>
+		<result column="tipo" property="tipo"/>
+	</resultMap>
+	
+	<resultMap type="MensajeIbatis" id="mapMensaje">
+		<id column="idmensaje" property="idmensaje"/>
+		<result column="asunto" property="asunto"/>
+		<result column="contenido" property="contenido"/>
+		<result column="fechaRegistro" property="fechaRegistro"/>
+		<result column="estado" property="estado"/>
+		<result column="idEmisor" property="idEmisor.idusuario"/>
+		<result column="idReceptor" property="idReceptor.idusuario"/>
+		<result column="idEmisor" property="codEmi"/>
+		<result column="idReceptor" property="codRec"/>
+		<result column="emisor" property="idEmisor.nombre"/>
+		<result column="receptor" property="idReceptor.nombre"/>
+	</resultMap>
+	
+	
+	<select id="SQL_ListaMensajeRecibidos" statementType="CALLABLE" resultMap="mapMensaje" parameterType="String">
+		call sp_listaMensajeRecibidos(#{cod});
+	</select>
+	<select id="SQL_ListaMensajeEnviados" statementType="CALLABLE" resultMap="mapMensaje" parameterType="String">
+		call sp_listaMensajeEnviados(#{cod});
+	</select>
+	<insert id="SQL_registraMensaje" statementType="CALLABLE" parameterType="MensajeIbatis">
+		call sp_registraMensaje(#{asunto},#{contenido},#{codEmi},#{codRec});
+	</insert>
+	
+	<select id="SQl_ListUsuariosXCargo" statementType="CALLABLE" resultMap="mapUsuario" parameterType="int">
+		call sp_listaTrabajadoresAtCargo(#{cargo});
+	</select>
+	<select id="SQL_IniciarSesion" statementType="CALLABLE" resultMap="mapUsuario" parameterType="UsuarioIbatis">
+		call sp_iniciarSesion(#{idusuario},#{password});
+	</select>
+	<select id="SQL_TraerEnlacesPorUsuario" statementType="CALLABLE" resultMap="mapMenu" parameterType="String">
+		call sp_TraerEnlacesAtUsuario(#{idUser});
+	</select>
+	
+	<select id="SQL_ListaMenuAtTipo" statementType="CALLABLE" resultMap="mapMenu" parameterType="String">
+		call sp_listaMenuAtTipo(#{tipo});
+	</select>
+	
+	<select id="SQl_GeneraCodigoUsuario" statementType="CALLABLE" resultMap="mapUsuario" parameterType="int">
+		call sp_generaCodigoUsuario(#{tipo});
+	</select>
+	 
+	 <select id="SQL_listaPersonalAdministrativo" statementType="CALLABLE" resultMap="mapUsuario">
+		call sp_listaPersonalAdministrativo();
+	</select>
+	 
+	<select id="SQl_ListUsuarios" statementType="CALLABLE" resultMap="mapUsuario">
+		call sp_listarUsuario();
+	</select>
+	
+	<select id="SQl_ListCBOUsuarios" statementType="CALLABLE" resultMap="mapUsuario">
+		call sp_listaComboUsuarios();
+	</select>
+	
+	<select id="SQl_ListObreros" statementType="CALLABLE" resultMap="mapUsuario">
+		call sp_listarObreros();
+	</select>
+	
+	<insert id="SQL_registrarUsuario" statementType="CALLABLE" parameterType="UsuarioIbatis">
+		call sp_registrarUsuario(#{nombre},#{apellidos},#{dni},#{ruc},#{telefono},#{correo},#{fechaContrato},
+								#{sueldo},#{banco},#{numeroCuenta},#{tipo},#{sexo},#{idcargo},#{iddistrito});
+	</insert>
+	
+	<select id="SQL_FindUsuario" statementType="CALLABLE" parameterType="String" resultMap="mapUsuario">
+		call sp_buscarUsuario(#{cod});
+	</select>
+		
+		<update id="SQL_ActualizarUsuario" statementType="CALLABLE" parameterType="UsuarioIbatis">
+		call sp_actualizarUsuario(#{idusuario},#{nombre},#{apellidos},#{dni},#{ruc},#{telefono},#{correo},
+		                                         #{fechaContrato},#{sueldo},#{banco},#{numeroCuenta},#{tipo},#{sexo},
+		                                         #{idcargo},#{iddistrito});
+	</update>
+	<update id="SQL_ActualizarPassword" statementType="CALLABLE" parameterType="UsuarioIbatis">
+		call sp_actaulizaPassword(#{password},#{idusuario});
+	</update>
+	<delete id="SQL_DeleteUsuario" statementType="CALLABLE" parameterType="String">
+		call sp_eliminaUsuario(#{codigo});
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
+

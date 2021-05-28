@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dawi">
+	<resultMap type="ActaEntregaIbatis" id="mapActaEntrega">
+		<id column="idactaEntrega" property="iddocumento"/>
+		<result column="estado" property="estado"/>
+		<result column="fecRegistro" property="fechaRegistro"/>
+		<result column="fecModificacion" property="fechaModificacion"/>
+		<result column="tipo" property="tipo"/>
+		<result column="nombre" property="nombre"/>
+		<result column="ruta" property="ruta"/>
+		<result column="idEmisor" property="idEmisor.idusuario"/>
+		<result column="idReceptor" property="idReceptor.idusuario"/>
+		
+		<result column="idcontrato" property="idcontrato"/>		
+		<result column="observaciones" property="observaciones"/>
+		
+		<result column="descripcion" property="contrato.descripcion"/>
+		<result column="fecInicio" property="contrato.fecInicio"/>
+		<result column="fecFinal" property="contrato.fechaFinal"/>
+		<result column="dias" property="contrato.dias"/>
+		<result column="monto" property="contrato.monto"/>
+
+		<result column="razonSocial" property="contrato.cotizacion.cliente.razonSocial"/>
+		<result column="direccion" property="contrato.cotizacion.cliente.direccion"/>
+		<result column="telefono" property="contrato.cotizacion.cliente.telefono"/>
+		<result column="dni" property="contrato.cotizacion.cliente.dni"/>
+				
+	</resultMap>
+	
+	<select id="SQL_listarActaEntrega" statementType="CALLABLE" resultMap="mapActaEntrega">
+	</select>
+	
+	
+	<select id="SQL_buscarActaEntregaXCodigo" statementType="CALLABLE" resultMap="mapActaEntrega" parameterType="String">
+		call sp_listaActaEntregaXCodigo(#{cod});
+	</select>
+	
+	<insert id="SQL_addActaEntrega" statementType="CALLABLE" parameterType="ActaEntregaIbatis">
+		call sp_registraActaEntrega(#{iddocumento},#{codEmi},#{idcontrato},#{observaciones},#{contrato.idcotizacion},#{contrato.fechaFinal});
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dawi">
+	<resultMap type="ItemIbatis" id="mapItem">
+		<id column="iditem" property="iditem"/>
+		<result column="nom_emp" property="nombre"/>
+		<result column="precioMin" property="precioMin"/>
+		<result column="precioMax" property="precioMax"/>
+	</resultMap>
+	<select id="SQL_listarItems" statementType="CALLABLE" resultMap="mapItem">
+		call sp_listaItem();
+	</select>
+	
+	<select id="SQL_ListarItemsAtName" statementType="CALLABLE" resultMap="mapItem" parameterType="String">
+		call sp_buscarItemAtNombre(#{nombre});
+	</select>
+	
+	<select id="SQL_buscaItemXCodigo" statementType="CALLABLE" resultMap="mapItem" parameterType="String">
+		call sp_buscaItemXID(#{cod});
+	</select>
+	
+	<insert id="SQL_addItem" statementType="CALLABLE" parameterType="ItemIbatis">
+		call sp_registraItem(#{nombre},#{precioMin},#{precioMax})
+	</insert>
+	<update id="SQL_updateItem" statementType="CALLABLE" parameterType="ItemIbatis">
+		call sp_actualizaItem(#{iditem},#{nombre},#{precioMin},#{precioMax});
+	</update>
+	<delete id="SQL_deleteItem" statementType="CALLABLE" parameterType="int">
+		call sp_eliminaItem(#{codigo});
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+

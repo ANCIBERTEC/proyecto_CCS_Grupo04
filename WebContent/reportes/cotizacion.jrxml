@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cotizacion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e260c8a9-bb61-48d1-a7ff-d91a9258bb0d">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+	<style name="table">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FF7F50">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFD0BF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#FFF3EF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="idcotizacion" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select d.*,i.nombre,doc.fecRegistro, cl.razonSocial,cl.correo,cl.telefono,concat(u.nombre,concat(' ',u.apellidos)) 'vendedor' from detallecotizacion d
+    join item i on d.iditem=i.iditem
+    join cotizacion c on d.idCotizacion=c.idCotizacion
+    join cliente cl on c.idcliente=cl.idcliente
+    join documento doc on c.idCotizacion=doc.iddocumento
+    join usuario u on doc.idEmisor=u.idusuario
+where c.idcotizacion=$P{idcotizacion}]]>
+	</queryString>
+	<field name="idCotizacion" class="java.lang.String">
+		<fieldDescription><![CDATA[cotizacion.iddocumento]]></fieldDescription>
+	</field>
+	<field name="iditem" class="java.lang.Integer">
+		<fieldDescription><![CDATA[item.iditem]]></fieldDescription>
+	</field>
+	<field name="precio" class="java.lang.Double">
+		<fieldDescription><![CDATA[precio]]></fieldDescription>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[cantidad]]></fieldDescription>
+	</field>
+	<field name="precioTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[precioTotal]]></fieldDescription>
+	</field>
+	<field name="subtotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[subtotal]]></fieldDescription>
+	</field>
+	<field name="descuento" class="java.lang.Double">
+		<fieldDescription><![CDATA[descuento]]></fieldDescription>
+	</field>
+	<field name="igv" class="java.lang.Double">
+		<fieldDescription><![CDATA[igv]]></fieldDescription>
+	</field>
+	<field name="monTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[monTotal]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[item.nombre]]></fieldDescription>
+	</field>
+	<field name="fecRegistro" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[cotizacion.fechaTime]]></fieldDescription>
+	</field>
+	<field name="razonSocial" class="java.lang.String">
+		<fieldDescription><![CDATA[cotizacion.cliente.razonSocial]]></fieldDescription>
+	</field>
+	<field name="correo" class="java.lang.String">
+		<fieldDescription><![CDATA[cotizacion.cliente.correo]]></fieldDescription>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[cotizacion.cliente.telefono]]></fieldDescription>
+	</field>
+	<field name="vendedor" class="java.lang.String">
+		<fieldDescription><![CDATA[cotizacion.idEmisor.nombre]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="185" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="-21" y="-25" width="597" height="210" uuid="b80a2461-8bf5-4190-ba38-56411eae5f02"/>
+				<imageExpression><![CDATA["D:\\CIBERTEC\\CICLO V\\PROYECTOS V\\JAVA\\Proyecto Ver. 1.0\\NCDEVICE\\WebContent\\img\\encabezado.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="18" y="0" width="217" height="48" forecolor="#FFFFFF" uuid="d95d7298-afe1-4269-b4ee-aa351b3fb5f8"/>
+				<textElement textAlignment="Justified" markup="none">
+					<font fontName="Cambria" size="32" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[COTIZACION]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="31" y="48" width="187" height="30" forecolor="#FFFFFF" uuid="6f287b27-ff5f-4965-b00d-910f6deec29f"/>
+				<textElement>
+					<font size="22"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idCotizacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="82" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="9" width="59" height="20" uuid="0548b9cf-8a26-4cbd-b54d-8d9734c713ee"/>
+				<textElement markup="none"/>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="9" width="54" height="20" uuid="0bd26169-fe2f-4057-a942-36d5ac0318e5"/>
+				<text><![CDATA[Vendedor:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="71" y="9" width="164" height="20" uuid="d337c5d5-7aea-4b8f-b9df-899b3453832d"/>
+				<textFieldExpression><![CDATA[$F{razonSocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="397" y="9" width="100" height="20" uuid="3703193c-ff4f-4df8-928a-dbdc4b9bf402"/>
+				<textFieldExpression><![CDATA[$F{vendedor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="397" y="29" width="100" height="20" uuid="ed87fc50-bc64-4e5c-915e-38fb82cff7d6"/>
+				<textFieldExpression><![CDATA[$F{fecRegistro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="296" y="29" width="86" height="20" uuid="05778827-c7c6-4b5c-8fa6-dbf08db3c426"/>
+				<text><![CDATA[Fecha de Registro:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="71" y="29" width="100" height="20" uuid="af2cfa27-9f16-48d4-9c97-383a903ce365"/>
+				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="29" width="59" height="20" uuid="abbeba57-7257-4629-bb55-762c4f712f87"/>
+				<text><![CDATA[Telefono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="49" width="59" height="20" uuid="e922274c-a22e-40be-b601-b252384cb31e"/>
+				<text><![CDATA[Correo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="71" y="49" width="164" height="20" uuid="41b8d83e-f404-4733-ac1f-5b9e7a20e8a9"/>
+				<textFieldExpression><![CDATA[$F{correo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<frame>
+				<reportElement style="table_TH" mode="Opaque" x="0" y="0" width="555" height="22" backcolor="#666666" uuid="17b2e4e8-c121-46f1-858c-eb4e447590fc"/>
+				<staticText>
+					<reportElement mode="Opaque" x="386" y="1" width="86" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="28918a6a-ae51-4505-b03c-8523f98c75cb"/>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Precio Unit]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="472" y="1" width="83" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="d09fb459-bc02-4125-a8b2-77383563faf6"/>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Precio Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="1" width="42" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="74c73fbc-7360-4551-a802-553f71d6d88b"/>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N°]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="42" y="0" width="287" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="eba9cca0-704d-447f-9410-7e15ee0571ef"/>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nombre]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="328" y="1" width="58" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="4177eca5-d283-471a-80e4-601fd107573a"/>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[QTY]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<frame>
+				<reportElement style="table_CH" mode="Opaque" x="0" y="0" width="555" height="22" backcolor="#CCCCCC" uuid="884af65a-011c-4958-b6dd-cc5c19940566"/>
+				<textField isBlankWhenNull="false">
+					<reportElement mode="Opaque" x="42" y="0" width="287" height="20" backcolor="#CCCCCC" uuid="8cc719e5-9d08-4f97-97ed-a9cf5dfc027a"/>
+					<textElement>
+						<font isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="328" y="0" width="58" height="20" backcolor="#CCCCCC" uuid="66cb9c31-e352-43eb-9841-31676a003e32"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="386" y="0" width="86" height="20" backcolor="#CCCCCC" uuid="64db875c-303d-4609-a08c-bc17cd926508"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="473" y="0" width="75" height="20" backcolor="#CCCCCC" uuid="762be936-14c0-469f-a8bf-82f8bcee5ced">
+						<property name="net.sf.jasperreports.export.pdf.tag.td" value="full"/>
+					</reportElement>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{precioTotal}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="3" y="0" width="39" height="20" uuid="b285593e-d5dd-4b21-a32d-1fbfb3e81e2d"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="196">
+			<staticText>
+				<reportElement x="18" y="4" width="246" height="46" uuid="2e9acb1b-a262-4a17-8080-1c596ba542ee"/>
+				<textElement markup="none">
+					<font fontName="Calibri" size="8"/>
+				</textElement>
+				<text><![CDATA[N° de cuenta corriente (soles):                     BANCO INTERBANK
+NC DEVICE EIRL                                              0555626931
+Código de Cuenta Interbancario (CCI):     0055-6952-33658-55
+CUENTA DE DETRACCIONES :     63-69-55988555
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="4" width="100" height="21" uuid="d43acb42-ecd5-4152-b63e-9ba2ebfa0dad"/>
+				<textElement markup="none"/>
+				<text><![CDATA[SUB-TOTAL	 S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="25" width="100" height="20" uuid="67da87c4-d2c1-45dc-ad4f-7993abde43ca"/>
+				<textElement markup="none"/>
+				<text><![CDATA[IGV 18%   	 S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="65" width="101" height="20" uuid="93d6f486-391d-4b98-bac6-8c9f1328b54e"/>
+				<textElement markup="none">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Daniel Ramos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="65" width="100" height="20" uuid="694761b9-a69d-4c66-9931-cd180dd42b2a"/>
+				<textElement markup="none"/>
+				<text><![CDATA[TOTAL:    	 S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="45" width="100" height="20" uuid="af0458c7-aca2-46fa-8a69-b8cdf7c0a1dc"/>
+				<textElement markup="none"/>
+				<text><![CDATA[DESCUENTO	 S/.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="455" y="5" width="100" height="20" uuid="a84df973-2fc9-4b50-8e58-e8d96f078b2a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="25" width="100" height="20" uuid="ebb8b2ae-735d-43f0-8c5f-0a20736aa89c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{igv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="45" width="100" height="20" uuid="9b05453c-ebf9-4a9a-aa94-841a88c60816"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{descuento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="65" width="100" height="20" uuid="6be00ac5-abf3-4963-b391-05729868dba0"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{monTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="115" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="-20" y="0" width="597" height="115" uuid="0ab57dda-4b9e-491a-904e-af41d1753868"/>
+				<imageExpression><![CDATA["D:\\CIBERTEC\\CICLO V\\PROYECTOS V\\JAVA\\Proyecto Ver. 1.0\\NCDEVICE\\WebContent\\img\\pie.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dawi">
+	<resultMap type="OrdenCompraIbatis" id="mapOrdenCompra">
+		<id column="idOrdenCompra" property="iddocumento"/>
+		<result column="estado" property="estado"/>
+		<result column="fecRegistro" property="fechaRegistro"/>
+		<result column="fecModificacion" property="fechaModificacion"/>
+		<result column="tipo" property="tipo"/>
+		<result column="nombre" property="nombre"/>
+		<result column="ruta" property="ruta"/>
+		<result column="idEmisor" property="idEmisor.idusuario"/>
+		<result column="idReceptor" property="idReceptor.idusuario"/>
+		<result column="codigo" property="iddocumento"/>
+		<result column="iddocumento" property="iddocumento"/>
+		
+	</resultMap>
+	<resultMap type="DetallleCompraIbatis" id="mapDetalleCompra">
+		<id column="idOrdenCompra" property="idOrdenCompra"/>
+		<result column="" property=""/>	
+	</resultMap>
+	
+	<select id="SQL_listarEmpleado" statementType="CALLABLE" resultMap="mapOrdenCompra">
+		
+	</select>
+	
+	<select id="SQL_buscarEmpleadoXCodigo" statementType="CALLABLE" resultMap="mapOrdenCompra">
+		
+	</select>
+	
+	<insert id="SQL_addEmpleado" statementType="CALLABLE" parameterType="DetallleCompraIbatis">
+		
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+

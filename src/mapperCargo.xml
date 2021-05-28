@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dawi">
+	<resultMap type="CargoIbatis" id="mapCargo">
+		<id column="idcargo" property="idcargo"/>
+		<result column="descripcion" property="descripcion"/>
+		<result column="idarea" property="idarea"/>
+		<result column="nom_area" property="area.descripcion"/>
+	</resultMap>
+	<select id="SQL_listarAllCargo" statementType="CALLABLE" resultMap="mapCargo">
+		call sp_listaAllCargo();
+	</select>
+	<select id="SQL_buscarCargoXCodigo" statementType="CALLABLE" resultMap="mapCargo" parameterType="int">
+		call sp_buscaCargoXCodigo(#{cod});
+	</select>
+	<select id="SQL_listarEspecialidades" statementType="CALLABLE" resultMap="mapCargo">
+		call sp_listaEspecialidades();
+	</select>
+	<select id="SQL_listaCargoXArea" statementType="CALLABLE" resultMap="mapCargo" parameterType="int">
+		call sp_listaCargoXArea(#{area});
+	</select>
+	
+	<insert id="SQL_manteCargo" statementType="CALLABLE" parameterType="CargoIbatis">
+		call sp_manteCargo(#{idcargo},#{descripcion},#{idarea});
+	</insert>
+	<delete id="SQL_deleteCargo" statementType="CALLABLE" parameterType="CargoIbatis">
+		call sp_eliminaCargo(#{codigo});
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+

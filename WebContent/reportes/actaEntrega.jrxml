@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cotizacion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e260c8a9-bb61-48d1-a7ff-d91a9258bb0d">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="411"/>
+	<style name="table">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FF7F50">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFD0BF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#FFF3EF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="idacta" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select ac.*, c.descripcion,c.fecInicio,c.fecFinal, c.dias,c.monto,cl.razonSocial,cl.direccion,cl.telefono,cl.dni from actaentrega ac
+inner join contrato c on ac.idcontrato=c.idcontrato
+inner join cotizacion ct on c.idCotizacion = ct.idCotizacion
+inner join cliente cl on ct.idcliente=cl.idcliente where ac.idactaEntrega=$P{idacta};]]>
+	</queryString>
+	<field name="idactaEntrega" class="java.lang.String">
+		<fieldDescription><![CDATA[iddocumento]]></fieldDescription>
+	</field>
+	<field name="idcontrato" class="java.lang.String">
+		<fieldDescription><![CDATA[idcontrato]]></fieldDescription>
+	</field>
+	<field name="observaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[observaciones]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[contrato.descripcion]]></fieldDescription>
+	</field>
+	<field name="fecInicio" class="java.lang.String">
+		<fieldDescription><![CDATA[contrato.fecInicio]]></fieldDescription>
+	</field>
+	<field name="fecFinal" class="java.lang.String">
+		<fieldDescription><![CDATA[contrato.fechaFinal]]></fieldDescription>
+	</field>
+	<field name="dias" class="java.lang.Integer">
+		<fieldDescription><![CDATA[contrato.dias]]></fieldDescription>
+	</field>
+	<field name="monto" class="java.lang.Double">
+		<fieldDescription><![CDATA[contrato.monto]]></fieldDescription>
+	</field>
+	<field name="razonSocial" class="java.lang.String">
+		<fieldDescription><![CDATA[contrato.cotizacion.cliente.razonSocial]]></fieldDescription>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<fieldDescription><![CDATA[contrato.cotizacion.cliente.direccion]]></fieldDescription>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[contrato.cotizacion.cliente.telefono]]></fieldDescription>
+	</field>
+	<field name="dni" class="java.lang.String">
+		<fieldDescription><![CDATA[contrato.cotizacion.cliente.dni]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="185" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="-21" y="-25" width="597" height="210" uuid="b80a2461-8bf5-4190-ba38-56411eae5f02"/>
+				<imageExpression><![CDATA["D:\\CIBERTEC\\CICLO V\\PROYECTOS V\\JAVA\\Proyecto Ver. 1.0\\NCDEVICE\\WebContent\\img\\encabezado.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Transparent" x="25" y="0" width="251" height="40" forecolor="#FFFFFF" uuid="06f92cc1-01cc-404b-938b-d61197a3086e"/>
+				<textElement>
+					<font fontName="Constantia" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACTA DE ENTREGA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="39" y="40" width="201" height="31" forecolor="#FFFFFF" uuid="6f852826-3dc4-47cf-bb96-a824e452a49d"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idactaEntrega}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="450" splitType="Stretch">
+			<frame>
+				<reportElement style="table" mode="Transparent" x="39" y="45" width="484" height="20" uuid="3f531212-b86a-4cae-a176-ca2e14e9f00d"/>
+				<textField>
+					<reportElement x="113" y="0" width="185" height="20" uuid="01cc1403-eeea-44bb-b5e8-0b272206d394"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="3" y="0" width="100" height="20" uuid="a7c533a3-73ec-42c7-b234-e1f31e7ee873"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Nombre del Proyecto:"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table" mode="Transparent" x="39" y="65" width="484" height="20" uuid="fe323dc0-ad81-42f8-9e6c-a1361caebf75"/>
+				<textField>
+					<reportElement x="3" y="0" width="100" height="20" uuid="4d7910c3-ac51-4a95-82d8-b4a8d4300f16"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Cliente:"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="298" y="0" width="38" height="20" uuid="0baf809b-c269-4f46-854e-84c4db183a94"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["DNI:"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="113" y="0" width="185" height="20" uuid="31cd9904-30c1-4334-9498-3c9e7386f19b"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{razonSocial}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="336" y="0" width="100" height="20" uuid="f89ed019-cd3b-46f4-896f-d67596ef81c7"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{dni}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table" mode="Transparent" x="39" y="85" width="484" height="20" uuid="cf8946d9-b4d6-4e11-bf2e-2293f813c40f"/>
+				<textField>
+					<reportElement x="3" y="0" width="100" height="20" uuid="9e7c4245-0930-46e8-bf59-7639e09a284e"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Dirección:"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="113" y="0" width="185" height="20" uuid="a1181532-0aaa-47ef-890b-31052c57330e"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table" mode="Transparent" x="39" y="105" width="484" height="20" uuid="a3a8d449-f2f2-41ca-b8f7-4c366470f24e"/>
+				<textField>
+					<reportElement x="3" y="0" width="100" height="20" uuid="b7f3cbc8-6448-4f62-9045-f85854b265b1"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Contratista:"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="113" y="0" width="100" height="20" uuid="af13a5dd-1845-4566-b51f-02a3ada5236b"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Daniel Ramos"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table" mode="Transparent" x="39" y="156" width="484" height="20" uuid="9494b684-0b60-4ea4-8e8f-003731aa2182"/>
+				<textField>
+					<reportElement x="113" y="0" width="100" height="20" uuid="29ab108d-8730-4699-b72d-6d71194f4f23"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{dias}+" dias"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="3" y="0" width="100" height="20" uuid="988c87a0-8d2d-40f3-902a-ab325e08a500"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Tiempo de ejecución:]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement style="table" mode="Transparent" x="39" y="176" width="484" height="20" uuid="82bf4e85-f129-41bf-a41c-c092e910adeb"/>
+				<staticText>
+					<reportElement x="3" y="0" width="100" height="20" uuid="31171103-c9bb-4bc8-8c93-81604315a875"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Fecha Inicio:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="298" y="0" width="61" height="20" uuid="4a02ff82-35c9-4199-ae6d-ebc1a685ad57"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Fecha Final:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="113" y="0" width="100" height="20" uuid="bd7544b5-c561-4def-9be4-eff738f3ab52"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{fecInicio}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="359" y="0" width="100" height="20" uuid="b8a4fe00-8106-45f8-b40a-fc763622759b"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{fecFinal}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table" mode="Transparent" x="39" y="196" width="484" height="20" uuid="42d12be9-fe5e-4537-ad2e-c880a29304b4"/>
+				<textField>
+					<reportElement x="113" y="0" width="100" height="20" uuid="ba55fc3d-d5f1-4df7-aaa9-a00cfdcfe21a"/>
+					<textFieldExpression><![CDATA["S/. "+$F{monto}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="3" y="0" width="100" height="20" uuid="3477a9e3-0879-4345-b259-67042d90d86c"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Monto:]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement style="table" mode="Transparent" x="39" y="216" width="484" height="95" uuid="a7797e49-78b1-4110-a67b-7b4e9a258d0b"/>
+				<staticText>
+					<reportElement x="3" y="0" width="100" height="20" uuid="1eb96b41-6269-441c-9457-47f331706a83"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Observaciones:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="3" y="20" width="475" height="75" uuid="06cfa15b-2401-4c57-a633-827cb303006b"/>
+					<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<line>
+				<reportElement x="523" y="45" width="1" height="80" uuid="9fc58846-83c0-4804-99c8-1c34259b4e48"/>
+			</line>
+			<line>
+				<reportElement x="39" y="45" width="1" height="80" uuid="b840806c-78c8-4255-bc9c-979c94cd4b1b"/>
+			</line>
+			<line>
+				<reportElement x="39" y="156" width="1" height="155" uuid="84a035af-1d7f-4eef-a411-00fe4e1ace8e"/>
+			</line>
+			<line>
+				<reportElement x="522" y="156" width="1" height="155" uuid="17fd2b35-f01f-4509-8d5b-db464aa956da"/>
+			</line>
+			<line>
+				<reportElement x="54" y="362" width="167" height="1" uuid="64496291-7d56-4140-b27f-3b844d7a20cc"/>
+			</line>
+			<line>
+				<reportElement x="342" y="360" width="133" height="1" uuid="8e4365c0-928a-4a80-9058-cf83c56faf62"/>
+			</line>
+			<staticText>
+				<reportElement x="54" y="362" width="167" height="49" uuid="f2a2ba3c-fe93-4543-8e3e-a77c202528d1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Daniel Ramos
+DNI:02305090
+Representante: NC DEVICE E.I.R.L.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="342" y="360" width="133" height="20" uuid="fbe752e8-abd1-49ac-8176-3e41cdd52042"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["DNI: "+$F{dni}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="342" y="380" width="133" height="20" uuid="a90501dc-5cac-4b92-8600-be2bb1cb3647"/>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["CLIENTE: "+$F{razonSocial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="39" y="15" width="484" height="20" uuid="90d64216-3c22-49a8-8f78-0413fd03c478"/>
+				<text><![CDATA[Mediante la presente se confirma el trabajo terminado con los siguientes datos:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="115" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="-20" y="0" width="597" height="115" uuid="0ab57dda-4b9e-491a-904e-af41d1753868"/>
+				<imageExpression><![CDATA["D:\\CIBERTEC\\CICLO V\\PROYECTOS V\\JAVA\\Proyecto Ver. 1.0\\NCDEVICE\\WebContent\\img\\pie.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+</jasperReport>

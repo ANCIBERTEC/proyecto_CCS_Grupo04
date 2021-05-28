@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dawi">
+	<resultMap type="VisitaTecnicaIbatis" id="mapVisita">
+		<id column="idvisitaTecnica" property="idvisita"/>
+		<result column="idcliente" property="idcliente"/>
+		<result column="idTecnico" property="idtecnico"/>
+		<result column="fecha" property="fecha"/>
+		<result column="hora" property="hora"/>
+		<result column="estado" property="estado"/>
+		<result column="raz_cli" property="cliente.razonSocial"/>
+		<result column="nom_cli" property="cliente.nombreContacto"/>
+		<result column="dir_cli" property="cliente.direccion"/>
+		<result column="fono_cli" property="cliente.telefono"/>
+		<result column="cor_cli" property="cliente.correo"/>
+		<result column="nom_usu" property="tecnico.nombre"/>
+		<result column="ape_usu" property="tecnico.apellidos"/>
+		<result column="car_usu" property="tecnico.cargo.descripcion"/>
+		
+		
+	</resultMap>
+	<resultMap type="DetalleVisitDocIbatis" id="mapVisitaDocs">
+		<id column="idvisitaTecnica" property="idvisita"/>
+		<id column="iddocumento" property="iddocumento"/>
+		
+	</resultMap>
+	<select id="SQL_listarVisita" statementType="CALLABLE" resultMap="mapVisita">
+		call sp_listaVisita();
+	</select>
+	
+	<select id="SQL_visitasPendientesXObrero" statementType="CALLABLE" resultMap="mapVisita" parameterType="String">
+		call sp_listaVisitaPendienteXObrero(#{codigo});
+	</select>
+	
+	<select id="SQL_buscarVisitaXCodigo" statementType="CALLABLE" resultMap="mapVisita">
+		
+	</select>	
+	<insert id="SQL_addVisitaTecnica" statementType="CALLABLE" parameterType="VisitaTecnicaIbatis">
+		call sp_registraVisita(#{idcliente},#{idtecnico},#{fecha},#{hora});
+	</insert>
+	
+	<insert id="SQL_addDetalleVisitaDocs" statementType="CALLABLE" parameterType="DetalleVisitDocIbatis">
+		call sp_registraDetalleVisitaDocs(#{idvisita},#{iddocumento});
+	</insert>
+	
+	<update id="SQL_updateVisitaTecnica" statementType="CALLABLE" parameterType="VisitaTecnicaIbatis">
+		
+	</update>
+	<delete id="SQL_deleteVisitaTecnica" statementType="CALLABLE" parameterType="VisitaTecnicaIbatis">
+		
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+

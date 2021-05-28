@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dawi">
+	<resultMap type="DocumentoIbatis" id="mapDocumento">
+		<id column="iddocumento" property="iddocumento"/>
+		<result column="estado" property="estado"/>
+		<result column="fecRegistro" property="fechaRegistro"/>
+		<result column="fecModificacion" property="fechaModificacion"/>
+		<result column="tipo" property="tipo"/>
+		<result column="nombre" property="nombre"/>
+		<result column="ruta" property="ruta"/>
+		<result column="idEmisor" property="idEmisor.idusuario"/>
+		<result column="idReceptor" property="idReceptor.idusuario"/>
+		<result column="nom_emi" property="idEmisor.nombre"/>
+		<result column="ape_emi" property="idEmisor.apellidos"/>
+		<result column="nom_rec" property="idReceptor.nombre"/>
+		<result column="ape_rec" property="idReceptor.apellidos"/>	
+		<result column="codigo" property="iddocumento"/>	
+		<result column="cantidad" property="cantNotificaciones"/>
+		
+		<result column="idusuario" property="idEmisor.idusuario"/>
+		<result column="fechaModificacion" property="fechaModificacion"/>
+		
+	</resultMap>
+	<resultMap type="DocumentoIbatis" id="mapFotoDoc">
+		<result column="foto" property="archivoBytes"/>
+	</resultMap>
+	
+	<select id="SQL_listaDocumento" statementType="CALLABLE" resultMap="mapDocumento">
+		call sp_generaCodigoCotizacion();
+	</select>
+	<select id="SQL_ListaHistorialDocs" statementType="CALLABLE" resultMap="mapDocumento">
+		call sp_listaHistoryDocs();
+	</select>
+	<select id="SQL_listaDocumentoPendietes" statementType="CALLABLE" resultMap="mapDocumento" parameterType="String">
+		call sp_listaDocsRecibidosAtUsuario(#{cod});
+	</select>
+	<select id="SQL_GenerarCodigoCotizacion" statementType="CALLABLE" resultMap="mapDocumento">
+		call sp_generaCodigoCotizacion();
+	</select>
+	<select id="SQL_GenerarCodigoContrato" statementType="CALLABLE" resultMap="mapDocumento">
+		call sp_generarCodigoContrato();
+	</select>
+	<select id="SQL_GenerarCodigoOrdenCompra" statementType="CALLABLE" resultMap="mapDocumento">
+		call sp_generaCodigoOrdenCompra();
+	</select>
+	<select id="SQL_GenerarCodigoActaEntrega" statementType="CALLABLE" resultMap="mapDocumento">
+		call sp_generaActaEntrega();
+	</select>
+	<select id="SQL_GenerarCodigoDocumento" statementType="CALLABLE" resultMap="mapDocumento">
+		call sp_generaCodigoDocumento();
+	</select>
+	
+	<select id="SQL_CantidadDocsRecAtUser" statementType="CALLABLE" resultMap="mapDocumento" parameterType="String">
+		call sp_cantidadDocsRecibidosAtUsuario(#{codigo});
+	</select>
+	
+	<select id="SQL_FotoDocumento" statementType="CALLABLE" resultMap="mapFotoDoc" parameterType="String">
+		call sp_fotoDocumento(#{codigo});
+	</select>
+	
+	<select id="SQL_listaDocumentoXCodigo" statementType="CALLABLE" resultMap="mapDocumento">
+		
+	</select>
+	<select id="SQL_listaAllDocumento" statementType="CALLABLE" resultMap="mapDocumento">
+		
+	</select>
+	<select id="SQL_listaDocsAtVisita" statementType="CALLABLE" resultMap="mapDocumento" parameterType="int">
+		call sp_listaDocsAtVisita(#{codigo});
+	</select>
+	
+	<select id="SQL_listaDocsAtContrato" statementType="CALLABLE" resultMap="mapDocumento" parameterType="String">
+		call sp_listaDocsAtContrato(#{codigo});
+	</select>
+	
+	<select id="SQL_listaDocumentoAtTipo" statementType="CALLABLE" resultMap="mapDocumento" parameterType="String">
+		call sp_listaDocumentoAtTipo(#{tipo});
+	</select>
+	<!-- 
+	<insert id="SQL_RegistraDocumento" statementType="CALLABLE" parameterType="DocumentoIbatis">
+		call sp_registrarCotizacion(#{iddocumento},#{cliente.idcliente},#{idEmisor.idusuario},#{idReceptor.idusuario});
+	</insert> -->
+	
+	<insert id="SQL_addDocumento" statementType="CALLABLE" parameterType="DocumentoIbatis">
+		call sp_registraDocumento(#{iddocumento},#{estado},#{tipo},#{nombre},#{ruta},#{codEmi},#{codRec});
+	</insert>
+	
+	<insert id="SQL_addDocumentoYFoto" statementType="CALLABLE" parameterType="DocumentoIbatis">
+		call sp_registraDocAndFoto(#{iddocumento},#{estado},#{tipo},#{nombre},#{ruta},#{codEmi},#{codRec},#{archivoBytes});
+	</insert>
+	
+	<update id="SQL_modificaDocumento" statementType="CALLABLE" parameterType="DocumentoIbatis">
+		
+	</update>
+	<delete id="SQL_deleteDocumento" statementType="CALLABLE" parameterType="DocumentoIbatis">
+		
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+

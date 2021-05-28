@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dawi">
+	<resultMap type="DistritoIbatis" id="mapDistrito">
+		<id column="iddistrito" property="iddistrito"/>
+		<result column="nombre" property="nombre"/>
+		<result column="idprovincia" property="idprovincia"/>
+	</resultMap>
+	<select id="SQL_listaDistritoXProvincia" statementType="CALLABLE" resultMap="mapDistrito" parameterType="int">
+		call sp_listaDistritoXProvincia(#{prov});
+	</select>
+	
+	<!-- 
+	<select id="SQL_buscarEmpleadoXCodigo" statementType="CALLABLE" resultMap="">
+		call sp_buscaEmpleadoXCodigo(#{idEmpleado});
+	</select>
+	
+	<insert id="SQL_addEmpleado" statementType="CALLABLE" parameterType="">
+		call sp_registraEmpleado(#{nombre},#{apePaterno},#{apeMaterno},#{sexo},#{fecNacimiento},#{hijos},#{sueldo},#{direccion},#{idDistrito});
+	</insert>
+	<update id="SQL_updateEmpleado" statementType="CALLABLE" parameterType="">
+		call sp_modificarEmpleado(#{idEmpleado},#{nombre},#{apePaterno},#{apeMaterno},#{sexo},#{fecNacimiento},#{hijos},#{sueldo},#{direccion},#{idDistrito});
+	</update>
+	<delete id="SQL_deleteEmpleado" statementType="CALLABLE" parameterType="">
+		call sp_eliminaEmpleado(#{idEmpleado});
+	</delete> -->
+</mapper>
+
+
+
+
+
+
+
+

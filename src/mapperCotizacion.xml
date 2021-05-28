@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dawi">
+	<resultMap type="CotizacionIbatis" id="mapCotizacion">
+		<id column="idCotizacion" property="iddocumento"/>
+		<result column="estado" property="estado"/>
+		<result column="fecRegistro" property="fechaRegistro"/>
+		<result column="fecModificacion" property="fechaModificacion"/>
+		<result column="tipo" property="tipo"/>
+		<result column="nombre" property="nombre"/>
+		<result column="ruta" property="ruta"/>
+		<result column="idEmisor" property="idEmisor.idusuario"/>
+		<result column="idReceptor" property="idReceptor.idusuario"/>
+		<result column="idcliente" property="cliente.idcliente"/>
+		<result column="idvisitaTecnica" property="visita.idvisita"/>	
+		<result column="fecRegistro" property="fechaTime"/>
+		<result column="codigo" property="iddocumento"/>
+		<result column="raz_cli" property="cliente.razonSocial"/>
+		<result column="nom_cli" property="cliente.nombreContacto"/>
+		<result column="nom_emi" property="idEmisor.nombre"/>
+		<result column="ape_emi" property="idEmisor.apellidos"/>
+		<result column="vendedor" property="idEmisor.nombre"/>
+		<result column="nom_rec" property="idReceptor.nombre"/>
+		<result column="ape_rec" property="idReceptor.apellidos"/>
+		<result column="razonSocial" property="cliente.razonSocial"/>
+	</resultMap>	
+	
+	<resultMap type="DetalleCotizacionIbatis" id="mapDetalleCot">
+		<id column="idCotizacion" property="cotizacion.iddocumento"/>
+		<result column="iditem" property="item.iditem"/>
+		<result column="nom_item" property="item.nombre"/>
+		<result column="precio" property="precio"/>
+		<result column="cantidad" property="cantidad"/>
+		<result column="precioTotal" property="precioTotal"/>
+		<result column="subtotal" property="subtotal"/>
+		<result column="descuento" property="descuento"/>
+		<result column="igv" property="igv"/>
+		<result column="monTotal" property="monTotal"/>	
+		<result column="fecRegistro" property="cotizacion.fechaTime"/>
+		<result column="raz_cli" property="cotizacion.cliente.razonSocial"/>
+		<result column="correo" property="cotizacion.cliente.correo"/>
+		<result column="telefono" property="cotizacion.cliente.telefono"/>
+		<result column="apellidos" property="cotizacion.idEmisor.apellidos"/>
+		<result column="vendedor" property="cotizacion.idEmisor.nombre"/>
+		
+	</resultMap>
+	
+	<select id="SQl_ListaAllCotizacion" resultMap="mapCotizacion">
+		call sp_listaAllCotizacion();
+	</select>
+	<select id="SQl_ListaCotizacionAtUsuario" statementType="CALLABLE" resultMap="mapCotizacion" parameterType="String">
+		call sp_listaCotizacionAtUsuario(#{codigo});
+	</select>
+	<select id="SQl_ListaCotizacionAtEstado" statementType="CALLABLE" resultMap="mapCotizacion" parameterType="CotizacionIbatis">
+		call sp_listaCotizacionAtEstado(#{codEmi},#{estado});
+	</select>
+	<select id="SQL_BuscaCotizacionXCodigo" statementType="CALLABLE" resultMap="mapCotizacion" parameterType="String">
+		call sp_buscarCotizacionXCodigo(#{codigo});
+	</select>
+	<select id="SQl_ListaDetalleCotizacion" statementType="CALLABLE" resultMap="mapDetalleCot" parameterType="String">
+		call sp_listaDetalleCotizacion(#{idcotizacion});
+	</select>
+	<!-- 
+	<select id="SQL_GenerarCodigoCotizacion" statementType="CALLABLE" resultMap="mapCotizacion">
+		call sp_generaCodigoCotizacion();
+	</select> -->
+	
+	
+	<insert id="SQL_RegistraCotizacion" statementType="CALLABLE" parameterType="CotizacionIbatis">
+		call sp_registraCotizacion(#{iddocumento},#{cliente.idcliente},#{idEmisor.idusuario},#{idReceptor.idusuario});
+	</insert>
+	
+	<insert id="SQL_RegistraDetalleCotizacion" statementType="CALLABLE" parameterType="DetalleCotizacionIbatis">
+		call sp_registraDetalleCotizacon(#{cotizacion.iddocumento},#{item.iditem},#{precio},#{cantidad},#{precioTotal},#{subtotal},#{descuento},#{igv},#{monTotal});
+	</insert>
+	
+	<update id="SQL_ActualizaCotizacion" statementType="CALLABLE" parameterType="CotizacionIbatis">
+		call sp_actualizaCotizacion(#{iddocumento},#{estado},#{idEmisor.idusuario},#{idReceptor.idusuario},#{idvisita});
+	</update>
+	<!-- 
+	<update id="SQL_ActualizaCliente" statementType="CALLABLE" parameterType="CotizacionIbatis">
+		
+	</update>
+	
+			
+	<select id="SQL_FindCotizacionXCodigo" statementType="CALLABLE" parameterType="int" resultMap="mapCotizacion">
+		
+	</select>
+	 -->
+</mapper>
+
+
+
+
+
+
+
+

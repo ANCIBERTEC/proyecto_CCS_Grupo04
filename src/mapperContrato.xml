@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dawi">
+	<resultMap type="ContratoIbatis" id="mapContrato">
+		<id column="idcontrato" property="iddocumento"/>
+		<result column="estado" property="estado"/>
+		<result column="fecRegistro" property="fechaRegistro"/>
+		<result column="fecModificacion" property="fechaModificacion"/>
+		<result column="tipo" property="tipo"/>
+		<result column="nombre" property="nombre"/>
+		<result column="ruta" property="ruta"/>
+		<result column="idEmisor" property="idEmisor.idusuario"/>
+		<result column="idReceptor" property="idReceptor.idusuario"/>
+		<result column="codigo" property="iddocumento"/>
+		
+		<result column="monto_total" property="monto"/>
+		<result column="descripcion" property="descripcion"/>
+		<result column="fecInicio" property="fecInicio"/>
+		<result column="fecFInal" property="fechaFinal"/>
+		<result column="dias" property="dias"/>
+		<result column="idCotizacion" property="idcotizacion"/>
+		<result column="iddocumento" property="iddocumento"/>
+		
+		<result column="raz_cli" property="cotizacion.cliente.razonSocial"/>
+		<result column="dir_cli" property="cotizacion.cliente.direccion"/>
+		<result column="nom_cli" property="cotizacion.cliente.nombreContacto"/>
+		<result column="fono_cli" property="cotizacion.cliente.telefono"/>
+		<result column="nom_dis" property="cotizacion.cliente.distrito.nombre"/>
+		<result column="dni_cli" property="cotizacion.cliente.dni"/>
+		
+		<result column="nom_emi" property="idEmisor.nombre"/>
+		<result column="ape_emi" property="idEmisor.apellidos"/>
+		<result column="nom_rec" property="idReceptor.nombre"/>
+		<result column="ape_rec" property="idReceptor.apellidos"/>
+		
+		<result column="iditem" property="detalleCot.item.iditem"/>
+		<result column="nom_item" property="detalleCot.item.nombre"/>
+		<result column="precio" property="detalleCot.precio"/>
+		<result column="cantidad" property="detalleCot.cantidad"/>
+		<result column="precioTotal" property="detalleCot.precioTotal"/>
+		<result column="precioTotal" property="detalleCot.monTotal"/>
+		
+	</resultMap>
+	<resultMap type="EquipoTrabajoIbatis" id="mapEquipo">
+		<id column="idcontrato" property="idcontrato"/>
+		<result column="idusuario" property="idtrabajador"/>
+		<result column="idusuario" property="trabajador.idusuario"/>
+		<result column="nombre" property="trabajador.nombre"/>
+		<result column="apellidos" property="trabajador.apellidos"/>
+		<result column="nom_car" property="trabajador.especialidad"/>
+		<result column="cargo" property="cargo"/>		
+		
+		<result column="descripcion" property="contrato.descripcion"/>
+		<result column="fecInicio" property="contrato.fecInicio"/>
+		<result column="estado" property="contrato.estado"/>
+		
+		<result column="raz_cli" property="contrato.cotizacion.cliente.razonSocial"/>
+		<result column="dir_cli" property="contrato.cotizacion.cliente.direccion"/>
+		<result column="fono_cli" property="contrato.cotizacion.cliente.telefono"/>
+		
+		
+	</resultMap>
+	<resultMap type="DetalleContratoDocsIbatis" id="mapContratoDocs">
+		<id column="idcontrato" property="idcontrato"/>
+		<id column="iddocumento" property="iddocumento"/>
+		
+	</resultMap>
+	
+	
+	<select id="SQL_BuscaContratoXCodigo" statementType="CALLABLE" resultMap="mapContrato" parameterType="String">
+		call sp_buscaContratoXCodigo(#{cod});
+	</select>
+	
+	<select id="SQL_ListaContratoXCodigo" statementType="CALLABLE" resultMap="mapContrato" parameterType="String">
+		call sp_listaContratoXCodigo(#{cod});
+	</select>
+	
+	<select id="SQL_ListaAllContratos" statementType="CALLABLE" resultMap="mapContrato">
+		call sp_listaAllContratos();
+	</select>
+	
+	<select id="SQL_TrabajosPendientesXObrero" statementType="CALLABLE" resultMap="mapEquipo" parameterType="String">
+		call sp_listaTrabajosPendientesXObrero(#{codigo});
+	</select>
+	
+	<select id="SQl_ListaContratonAtEstado" statementType="CALLABLE" resultMap="mapContrato" parameterType="ContratoIbatis">
+		call sp_listaContratoAtEstado(#{codEmi},#{estado});
+	</select>
+	
+	<select id="SQl_ListaEquipoAtContrato" statementType="CALLABLE" resultMap="mapEquipo" parameterType="String">
+		call sp_listaEquipoTrabajoAtContrato(#{codigo});
+	</select>
+	
+	<insert id="SQL_RegistraContrato" statementType="CALLABLE" parameterType="ContratoIbatis">
+		call sp_registraContrato(#{iddocumento},#{descripcion},#{fecInicio},#{fechaFinal},#{dias},#{idcotizacion},#{codEmi},#{codRec});
+	</insert>
+	<insert id="SQL_RegistraEquipoTrabajo" statementType="CALLABLE" parameterType="EquipoTrabajoIbatis">
+		call sp_registraEquipoTrabajo(#{idcontrato},#{idtrabajador},#{cargo});
+	</insert>
+	
+	<insert id="SQL_addDetalleContratoDoc" statementType="CALLABLE" parameterType="DetalleContratoDocsIbatis">
+		call sp_registraDetalleContratoDocs(#{idcontrato},#{iddocumento});
+	</insert>
+</mapper>
+
+
+
+
+
+
+
+

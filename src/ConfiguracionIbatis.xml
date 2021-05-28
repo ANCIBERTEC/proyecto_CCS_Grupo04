@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- PASO 1: Alias a las clases que se encuentra en el paquete entidad -->
+	<typeAliases>
+		<typeAlias type="net.ncdevice.entidad.Area" alias="AreaIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.Cargo" alias="CargoIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.Distrito" alias="DistritoIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.Provincia" alias="ProvinciaIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.Region" alias="RegionIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.Proveedor" alias="ProveedorIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.Usuario" alias="UsuarioIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.Menu" alias="MenuIbatis"/>	
+		<typeAlias type="net.ncdevice.entidad.Cliente" alias="ClienteIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.Item" alias="ItemIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.Cotizacion" alias="CotizacionIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.DetalleCotizacion" alias="DetalleCotizacionIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.Documento" alias="DocumentoIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.VisitaTecnica" alias="VisitaTecnicaIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.Contrato" alias="ContratoIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.EquipoTrabajo" alias="EquipoTrabajoIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.OrdenCompra" alias="OrdenCompraIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.DetalleCompraMateriales" alias="DetallleCompraIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.ActaEntrega" alias="ActaEntregaIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.DetalleContratoDocs" alias="DetalleContratoDocsIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.DetalleVisitDoc" alias="DetalleVisitDocIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.Mensaje" alias="MensajeIbatis"/>
+		
+		<!-- 		
+		<typeAlias type="net.ncdevice.entidad.DetalleCotizacion" alias="DetalleCotizacionIbatis"/>
+		
+		<typeAlias type="net.ncdevice.entidad.Acceso" alias="AccesoIbatis"/>
+		
+		<typeAlias type="net.ncdevice.entidad.HistorialDocsEstado" alias="HistorialDocsEstadoIbatis"/>
+		<typeAlias type="net.ncdevice.entidad.Menu" alias="MensajeIbatis"/>
+		 -->
+	</typeAliases>
+	<!-- PASO 2: Conexion a BD-->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="UNPOOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+				<property name="url" value="jdbc:mysql://localhost:3306/ncdevice"/>
+				<property name="username" value="root"/>
+				<property name="password" value="mysql"/>
+			</dataSource>
+		</environment>
+	</environments>
+	<!-- PASO 3: Registro de los archivos XML (contienen las sentencias sql) -->
+	<mappers>
+		<mapper resource='mapperArea.xml'/>
+		<mapper resource='mapperCargo.xml'/>
+		<mapper resource='mapperDistrito.xml'/>
+		<mapper resource='mapperProvincia.xml'/>
+		<mapper resource='mapperRegion.xml'/>
+		<mapper resource='mapperProveedor.xml'/>
+		<mapper resource='mapperUsuario.xml'/>
+		<mapper resource='mapperCliente.xml'/>
+		<mapper resource='mapperItem.xml'/>
+		<mapper resource='mapperDocumento.xml'/>
+		<mapper resource='mapperCotizacion.xml'/>
+		<mapper resource='mapperVisitaTecnica.xml'/>
+		<mapper resource='mapperContrato.xml'/>
+		<mapper resource='mapperOrdenCompra.xml'/>
+		<mapper resource='mapperActaEntrega.xml'/>
+		
+		<!-- 
+		<mapper resource='mapperAcceso.xml'/>	
+		<mapper resource='mapperHistorialDocsEstado.xml'/>
+		<mapper resource='mapperMensaje.xml'/>
+		
+		 -->
+		
+	</mappers>
+</configuration>
+
+
+

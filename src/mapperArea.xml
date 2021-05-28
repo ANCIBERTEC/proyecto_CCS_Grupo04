@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dawi">
+	
+	<resultMap type="AreaIbatis" id="resultArea">
+		<id column="idarea" property="idarea"/>
+		<result column="descripcion" property="descripcion"/>
+	</resultMap>
+	
+	<select id="SQL_listarArea" statementType="CALLABLE" resultMap="resultArea">
+		call sp_listaAllArea();
+	</select>
+	
+	<select id="SQL_buscarAreaXCodigo" statementType="CALLABLE" resultMap="resultArea" parameterType="int">
+		call sp_buscaAreaXCodigo(#{cod});
+	</select>
+	
+	<insert id="SQL_addArea" statementType="CALLABLE" parameterType="AreaIbatis">
+		call sp_manteArea(#{idarea},#{descripcion});
+	</insert>
+	
+	<update id="SQL_updateArea" statementType="CALLABLE" parameterType="AreaIbatis">
+		call sp_manteArea(#{idarea},#{descripcion});
+	</update>
+	
+	<delete id="SQL_deleteArea" statementType="CALLABLE" parameterType="AreaIbatis">
+		call sp_eliminaArea(#{codigo});
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+

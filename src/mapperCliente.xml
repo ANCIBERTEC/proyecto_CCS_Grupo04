@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dawi">
+	<resultMap type="ClienteIbatis" id="mapCliente">
+		<id column="idcliente" property="idcliente"/>
+		<result column="razonSocial" property="razonSocial"/>
+		<!-- corregir nombre en bd de CONTACO -->
+		<result column="nombreContaco" property="nombreContacto"/>
+		<result column="dni" property="dni"/>
+		<result column="ruc" property="ruc"/>
+		<result column="telefono" property="telefono"/>
+		<result column="direccion" property="direccion"/>
+		<result column="correo" property="correo"/>
+		<result column="calificacion" property="calificacion"/>
+		<result column="tipo" property="tipo"/>
+		<result column="iddistrito" property="iddistrito"/>
+		<result column="nom_dis" property="distrito.nombre"/>
+		<result column="nom_reg" property="distrito.provincia.region.nombre"/>
+		<result column="cod_pro" property="distrito.provincia.idprovincia"/>
+		<result column="cod_reg" property="distrito.provincia.region.idregion"/>
+	</resultMap>	
+	
+	<select id="SQL_ListaClientes" statementType="CALLABLE" resultMap="mapCliente">
+		call sp_listarClientes();
+	</select>
+	<select id="SQL_ListaAllClientes" statementType="CALLABLE" resultMap="mapCliente">
+		call sp_listarAllClientes();
+	</select>
+	<select id="SQL_ListaClienteAtName" statementType="CALLABLE" resultMap="mapCliente" parameterType="String">
+		call sp_buscarClienteAtName(#{nom});
+	</select>
+	
+	<insert id="SQL_RegistraCliente" statementType="CALLABLE" parameterType="ClienteIbatis">
+		call sp_registrarCliente(#{razonSocial},#{nombreContacto},#{dni},
+				#{ruc},#{telefono},#{direccion},#{correo},#{calificacion},
+				#{tipo},#{iddistrito});
+	</insert>
+	<insert id="SQL_RegistraClienteJSON" statementType="CALLABLE" parameterType="ClienteIbatis">
+		call sp_registraClienteJson(#{razonSocial},#{nombreContacto},#{telefono},#{correo});
+	</insert>
+	<update id="SQL_ActualizaCliente" statementType="CALLABLE" parameterType="ClienteIbatis">
+		call sp_actualizarCliente(#{idcliente},#{razonSocial},#{nombreContacto},#{dni},
+				#{ruc},#{telefono},#{direccion},#{correo},#{calificacion},
+				#{tipo},#{iddistrito});
+	</update>
+	
+	<delete id="SQL_EliminaCliente" statementType="CALLABLE" parameterType="int">
+		call sp_eliminarCliente(#{idcliente});
+	</delete>
+			
+	<select id="SQL_BuscaClienteXCodigo" statementType="CALLABLE" parameterType="int" resultMap="mapCliente">
+		call sp_buscarCliente(#{cod});
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
